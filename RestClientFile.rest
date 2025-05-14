@@ -1,0 +1,31 @@
+### Get all requests
+GET http://localhost:8082/api/leaverequests
+
+
+### Add a request  
+POST  http://localhost:8082/api/leaverequests HTTP/1.1
+content-type: application/json
+
+{
+    "leaveRequestId": "R001",
+    "studentId": "S001",
+    "leaveTybe": "Militery service",   
+    "leaveDescription": "I have ...."  
+}
+
+### Finalize a request  
+PUT  http://localhost:8083/api/leaveserviceresponse HTTP/1.1
+content-type: application/json
+
+{
+    "leaveRequestId": "R001",
+    "studentId": "S001",
+    "leaveTybe": "Militery service",   
+    "leaveDescription": "I have ....",   
+    "justification": "According to rule number....",
+    "leaveRequestStatus": "Accepted"
+}
+
+
+
+
