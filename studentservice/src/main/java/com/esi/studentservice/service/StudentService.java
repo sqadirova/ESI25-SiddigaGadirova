@@ -35,6 +35,18 @@ public class StudentService {
                 .build();
     }
 
+//    Task 2
+    private LeaveRequest mapToLeaveRequest(LeaveRequestDto leaveRequestDto) {
+        return LeaveRequest.builder()
+                .leaveRequestId(leaveRequestDto.getLeaveRequestId())
+                .studentId(leaveRequestDto.getStudentId())
+                .leaveTybe(leaveRequestDto.getLeaveTybe())
+                .leaveDescription(leaveRequestDto.getLeaveDescription())
+                .justification(leaveRequestDto.getJustification())
+                .leaveRequestStatus(leaveRequestDto.getLeaveRequestStatus())
+                .build();
+    }
+
     public void addLeaveRequest(LeaveRequestDto leaveRequestDto) {
     }
 
