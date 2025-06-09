@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.esi.studentservice.model.LeaveRequestStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import com.esi.studentservice.dto.LeaveRequestDto;
 import com.esi.studentservice.model.LeaveRequest;
@@ -19,6 +20,8 @@ public class StudentService {
 
     @Autowired
     private StudentRepository studentRepository;
+
+    private final KafkaTemplate<String, LeaveRequestDto> kafkaTemplate;
 
     public List<LeaveRequestDto> getAllleaveRequests() {
         List<LeaveRequest> leaveRequests = new ArrayList<>();
@@ -58,6 +61,10 @@ public class StudentService {
         leaveRequest.setLeaveRequestStatus(LeaveRequestStatus.Submitted);
 
         studentRepository.save(leaveRequest);
+
+        kafkaTemplate.send("LeaveRequestCreatedTopic", leaveRequestDto);
+
+        log.info("A leave request has been created and sent to the Kafka topic -LeaveRequestCreatedTopic");
     }
 
 }
