@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.esi.studentservice.model.LeaveRequestStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import com.esi.studentservice.dto.LeaveRequestDto;
@@ -66,5 +67,12 @@ public class StudentService {
 
         log.info("A leave request has been created and sent to the Kafka topic -LeaveRequestCreatedTopic");
     }
+
+    @KafkaListener(topics = "LeaveRequestFinalizedTopic", groupId = "leaveRequestFinalizeGroup")
+    public void updateLeaveRequest(LeaveRequestDto leaveRequestDto) {
+        studentRepository.save(mapToLeaveRequest(leaveRequestDto));
+        log.info("A leave request has been updated");
+    }
+
 
 }

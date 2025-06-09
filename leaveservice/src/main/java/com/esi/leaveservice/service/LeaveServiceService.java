@@ -2,6 +2,7 @@ package com.esi.leaveservice.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import com.esi.leaveservice.dto.LeaveRequestDto;
 import com.esi.leaveservice.model.LeaveRequest;
@@ -17,6 +18,8 @@ public class LeaveServiceService {
     @Autowired
     private LeaveServiceRepository leaveServiceRepository;
 
+    private final KafkaTemplate<String, LeaveRequestDto> kafkaTemplate;
+
     public void updateLeaveResponse(LeaveRequestDto leaveRequestDto) {
 
         LeaveRequest leaveRequest = LeaveRequest.builder()
@@ -25,11 +28,14 @@ public class LeaveServiceService {
                 .leaveTybe(leaveRequestDto.getLeaveTybe())
                 .leaveDescription(leaveRequestDto.getLeaveDescription())
                 .leaveRequestStatus(leaveRequestDto.getLeaveRequestStatus())
+                .justification(leaveRequestDto.getJustification())
                 .build();
 
-        log.info("A leave reuest with user id: {} has been updated", leaveRequest.getLeaveRequestId());
+        log.info("A leave request with user id: {} has been updated", leaveRequest.getLeaveRequestId());
 
         leaveServiceRepository.save(leaveRequest);
+
+        kafkaTemplate.send("LeaveRequestFinalizedTopic", leaveRequestDto);
     }
 
     @KafkaListener(topics = "LeaveRequestCreatedTopic", groupId = "leaveRequestCreateGroup")
