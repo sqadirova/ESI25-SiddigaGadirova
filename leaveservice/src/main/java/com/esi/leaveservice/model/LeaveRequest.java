@@ -23,6 +23,7 @@ public class LeaveRequest {
     private String studentId;
     private String leaveTybe;
     private String leaveDescription;
+    private String justification;
     @Enumerated(EnumType.STRING)
     private LeaveRequestStatus leaveRequestStatus;
 
