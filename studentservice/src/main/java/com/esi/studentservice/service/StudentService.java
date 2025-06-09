@@ -49,9 +49,6 @@ public class StudentService {
     }
 
     public void addLeaveRequest(LeaveRequestDto leaveRequestDto) {
-        LeaveRequest leaveRequest = mapToLeaveRequest(leaveRequestDto);
-        studentRepository.save(leaveRequest);
-        log.info("A leave request with user id: {} has been created", leaveRequest.getLeaveRequestId());
     }
 
 }
