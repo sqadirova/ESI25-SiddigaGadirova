@@ -45,6 +45,7 @@ public class StudentService {
                 .justification(leaveRequestDto.getJustification())
                 .leaveRequestStatus(leaveRequestDto.getLeaveRequestStatus())
                 .build();
+
     }
 
     public void addLeaveRequest(LeaveRequestDto leaveRequestDto) {
