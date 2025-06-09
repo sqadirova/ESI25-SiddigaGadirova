@@ -2,6 +2,8 @@ package com.esi.studentservice.service;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.esi.studentservice.model.LeaveRequestStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.esi.studentservice.dto.LeaveRequestDto;
@@ -35,7 +37,7 @@ public class StudentService {
                 .build();
     }
 
-//    Task 2
+    //    Task 2.1
     private LeaveRequest mapToLeaveRequest(LeaveRequestDto leaveRequestDto) {
         return LeaveRequest.builder()
                 .leaveRequestId(leaveRequestDto.getLeaveRequestId())
@@ -49,6 +51,12 @@ public class StudentService {
     }
 
     public void addLeaveRequest(LeaveRequestDto leaveRequestDto) {
+        leaveRequestDto.setLeaveRequestStatus(LeaveRequestStatus.Submitted);
+
+        LeaveRequest leaveRequest = mapToLeaveRequest(leaveRequestDto);
+
+        leaveRequest.setLeaveRequestStatus(LeaveRequestStatus.Submitted);
+
     }
 
 }
