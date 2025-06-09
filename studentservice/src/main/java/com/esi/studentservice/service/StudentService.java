@@ -57,6 +57,7 @@ public class StudentService {
 
         leaveRequest.setLeaveRequestStatus(LeaveRequestStatus.Submitted);
 
+        studentRepository.save(leaveRequest);
     }
 
 }
